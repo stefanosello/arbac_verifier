@@ -24,7 +24,7 @@ module ArbacVerifier
   #
   def parse_arbac_file(path)
     file = File.open(path)        
-    lines = file.readlines.map{|l| l.chomp!(" ;\n")}
+    lines = file.readlines.map{|l| l.chomp!(" ;\n")}.select{|l| !(l.nil?)}
     result = Hash.new
     lines.each do |line|
       row = line.split(" ")
@@ -124,6 +124,10 @@ module ArbacVerifier
     policy[:CR] = policy[:CR].select{ |cr| !(unused_roles.include?(cr[1])) }
     policy[:Roles] -= unused_roles
     policy
+  end
+
+  def compute_reachability(policy)
+    # TODO
   end
 
 end
