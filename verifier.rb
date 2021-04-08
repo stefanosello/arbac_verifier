@@ -1,6 +1,7 @@
 #! /usr/bin/env ruby
 # :markup: TomDoc
 
+# Collection of utilities to manipulate .arbac files (defining an ARBAC role reachability problem) to parse and eventually solve the problem
 module ArbacVerifier
   require 'set'
   require 'thread'
@@ -50,7 +51,7 @@ module ArbacVerifier
 
   # Public: Compute the forward slicing algorithm within a given policy in order to make the latter smaller and easier to analyze
   #
-  # original_policy - The policy object, expressed as an hash structured in the same way of the return value of +parse_arbac_file(string)+
+  # original_policy - The policy object, expressed as an hash structured in the same way of the return value of parse_arbac_file(string)
   #
   # Returns the simplified policy
   #
@@ -86,7 +87,7 @@ module ArbacVerifier
 
   # Public: Compute the backward slicing algorithm within a given policy in order to make the latter smaller and easier to analyze
   #
-  # original_policy - The policy object, expressed as an hash  structured in the same way of the return value of +parse_arbac_file(string)+
+  # original_policy - The policy object, expressed as an hash  structured in the same way of the return value of parse_arbac_file(string)
   #
   # Returns the simplified policy
   #
@@ -115,6 +116,17 @@ module ArbacVerifier
     policy
   end
 
+  # Public: Computes the solution of the role reachability problem for the given policy and target
+  #
+  # policy - The hash representation (in the same form of the result value of parse_arbac_file)
+  #
+  # Returns true if the given instance is satisfied, false otherwise
+  #
+  # Examples
+  #
+  #   backward_slicing({:Roles=>["Teacher", "Student", "TA", "Admin"], :Users=>["stefano", "alice", "bob"], :UA=>[["stefano", "Teacher"], ["alice", "TA"]], :CR=>[["Teacher", "Student"], ["Teacher", "TA"]], :CA=>[["Teacher", [["Admin"], ["Teacher", "TA"]], "Student"], ["Teacher", [[], ["Teacher", "TA"]], "Student"], ["Teacher", [[], ["Student"]], "TA"], ["Teacher", [["TA"], ["Student"]], "Teacher"]], :Goal=>"Student"})
+  #   # => 0
+  #
   def compute_reachability(policy)
     all_states = Set.new
     new_states = Set.new [policy[:UA]]
@@ -145,13 +157,13 @@ module ArbacVerifier
 
   # Internal: Given a current state, a target user and an assignment rule, computes the rule application result state
   #
-  # state           - The initial state in which the transition should be applied, represented as a set of arrays +[<user>,<role>]+
+  # state           - The initial state in which the transition should be applied, represented as a set of arrays [<user>,<role>]
   # target          - The string representation of the user to whom assign the new role
-  # assignment_rule - The assignment rule, espressed as +[<agent_role>,[[<positive_precondition>,...],[<negative_precondition>,...]],<new_role>]+
+  # assignment_rule - The assignment rule, espressed as [agent_role,[ [ positive_precondition,... ], [ negative_precondition,... ] ],new_role]
   #
-  # Returns the state, represented in the same way of the +state+ parameter, resulted from the application of the assignment.
+  # Returns the state, represented in the same way of the state parameter, resulted from the application of the assignment.
   #
-  #   NOTE: if the rule cannot be applied because either there are no users in the initial state with the agent role, the target is not present in the initial state or the preconditions on the target are not satisfied, then the method returns the initial state itself
+  # *Note*: if the rule cannot be applied because either there are no users in the initial state with the agent role, the target is not present in the initial state or the preconditions on the target are not satisfied, then the method returns the initial state itself
   #
   def apply_role_assignment(state, target, assignment_rule)
     agent = assignment_rule.first
@@ -183,13 +195,13 @@ module ArbacVerifier
 
   # Internal: Given a current state, a target user and an revocation rule, computes the rule application result state
   #
-  # state           - The initial state in which the transition should be applied, represented as a set of arrays +[<user>,<role>]+
+  # state           - The initial state in which the transition should be applied, represented as a set of arrays [<user>,<role>]
   # target          - The string representation of the user to whom revoke the role
-  # assignment_rule - The revocation rule, espressed as +[<agent_role>,<role_to_revoke>]+
+  # assignment_rule - The revocation rule, espressed as [<agent_role>,<role_to_revoke>]
   #
-  # Returns the state, expressed as the +state+ parameter, resulted from the application of the revocation.
+  # Returns the state, expressed as the state parameter, resulted from the application of the revocation.
   #
-  #   NOTE: if the rule cannot be applied because either there are no users in the initial state with the agent role or the association <target user,role to be revoked> is not present in the initial state, then the method returns the initial state itself
+  # *Note*: if the rule cannot be applied because either there are no users in the initial state with the agent role or the association <target user,role to be revoked> is not present in the initial state, then the method returns the initial state itself
   #
   def apply_role_revocation(state, target, revocation_rule)
     agent = revocation_rule.first
@@ -208,7 +220,7 @@ module ArbacVerifier
 
 end
 
-def main(arguments)
+def main(arguments) # :nodoc:
   include ArbacVerifier
 
   if arguments.length != 1
