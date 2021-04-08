@@ -3,6 +3,7 @@
 
 module ArbacVerifier
   require 'set'
+  require 'thread'
 
   # Public: Parse a given and properly formatted arbac file into an easily usable hash
   #
@@ -118,11 +119,8 @@ module ArbacVerifier
     all_states = Set.new
     new_states = Set.new [policy[:UA]]
     found = false
-    while !found
+    while !found && (new_states - all_states).length > 0
       old_states = new_states - all_states
-      if old_states.length == 0
-        break
-      end
       all_states += new_states
       new_states = Set.new
       old_states.each do |current_state|
@@ -135,13 +133,11 @@ module ArbacVerifier
               break
             end
           end
-          if found
-            break;
-          end
           policy[:CR].each do |revocation|
             new_states << apply_role_revocation(current_state, user, revocation)
           end
         end
+        break unless !found
       end
     end
     found
