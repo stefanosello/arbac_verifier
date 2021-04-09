@@ -113,4 +113,68 @@ module ArbacModule
     policy[:Roles] -= unused_roles
     policy
   end
+
+  # Internal: Given a current state, a target user and an assignment rule, computes the rule application result state
+  #
+  # state           - The initial state in which the transition should be applied, represented as a set of arrays [<user>,<role>]
+  # target          - The string representation of the user to whom assign the new role
+  # assignment_rule - The assignment rule, espressed as [agent_role,[ [ positive_precondition,... ], [ negative_precondition,... ] ],new_role]
+  #
+  # Returns the state, represented in the same way of the state parameter, resulted from the application of the assignment.
+  #
+  # *Note*: if the rule cannot be applied because either there are no users in the initial state with the agent role, the target is not present in the initial state or the preconditions on the target are not satisfied, then the method returns the initial state itself
+  #
+  def apply_role_assignment(state, target, assignment_rule)
+    agent = assignment_rule.first
+    if !(state.map(&:first).include? target)
+      # The target user is not in the current state
+      state
+    elsif !(state.map(&:last).include? agent)
+      # There is no user in the current state with the agent role
+      state
+    else
+      positive_preconditions_hold = true
+      negative_preconditions_hold = true
+      assignment_rule[1].first.each do |role|
+        positive_preconditions_hold &&= (state.include? [target,role])
+      end
+      assignment_rule[1].last.each do |role|
+        negative_preconditions_hold &&= !(state.include? [target,role])
+      end
+      if positive_preconditions_hold && negative_preconditions_hold
+        new_state = state.dup
+        new_state << [target,assignment_rule.last]
+        new_state
+      else
+        # preconditions don't hold
+        state
+      end
+    end
+  end
+
+  # Internal: Given a current state, a target user and an revocation rule, computes the rule application result state
+  #
+  # state           - The initial state in which the transition should be applied, represented as a set of arrays [<user>,<role>]
+  # target          - The string representation of the user to whom revoke the role
+  # assignment_rule - The revocation rule, espressed as [<agent_role>,<role_to_revoke>]
+  #
+  # Returns the state, expressed as the state parameter, resulted from the application of the revocation.
+  #
+  # *Note*: if the rule cannot be applied because either there are no users in the initial state with the agent role or the association <target user,role to be revoked> is not present in the initial state, then the method returns the initial state itself
+  #
+  def apply_role_revocation(state, target, revocation_rule)
+    agent = revocation_rule.first
+    if !(state.include? [target,revocation_rule.last])
+      # The association <target user,role to be revoked> is not in the current state
+      state
+    elsif !(state.map(&:last).include? agent)
+      # There is no user in the current state with the agent role
+      state
+    else
+      new_state = state.dup
+      new_state.delete [target,revocation_rule.last]
+      new_state
+    end
+  end
+  
 end
