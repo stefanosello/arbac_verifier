@@ -9,7 +9,6 @@ def main(arguments) # :nodoc:
   end
 
   arbac = ArbacInstance.new arguments[0]
-  puts arbac.instance
   puts arbac.compute_reachability
   exit 0
 end

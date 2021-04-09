@@ -78,7 +78,6 @@ module ArbacModule
       ca[1][1] = ca[1][1] - unused_roles
       ca
     end.to_set
-    policy[:UA] = policy[:UA].select {|ua| !(unused_roles.include?(ua[1]))}
     policy[:Roles] -= unused_roles
     policy
   end
@@ -109,7 +108,6 @@ module ArbacModule
     unused_roles = original_policy[:Roles] - s
     policy[:CA] = policy[:CA].select{ |ca| !(unused_roles.include?(ca[2])) }.to_set
     policy[:CR] = policy[:CR].select{ |cr| !(unused_roles.include?(cr[1])) }.to_set
-    policy[:UA] = policy[:UA].select {|ua| !(unused_roles.include?(ua[1]))}
     policy[:Roles] -= unused_roles
     policy
   end
