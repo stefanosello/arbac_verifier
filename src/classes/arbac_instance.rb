@@ -4,6 +4,7 @@
 class ArbacInstance
   require_relative './../modules/arbac_module.rb'
   include ArbacModule
+  require 'thread'
 
   # Public: Gets/Sets the Hash value of @instance
   attr_accessor :instance
@@ -38,26 +39,31 @@ class ArbacInstance
     all_states = Set.new
     new_states = Set.new [@instance[:UA]]
     found = false
-    while !found && (new_states - all_states).length > 0
+    start = Time.now
+    while !found && (new_states - all_states).length > 0 && (Time.now - start) < 300
+      puts Time.now - start
+      puts new_states.length
       old_states = new_states - all_states
       all_states += new_states
       new_states = Set.new
-      old_states.each do |current_state|
-        @instance[:Users].each do |user|
-          @instance[:CA].each do |assignment|
-            s = apply_role_assignment(current_state, user, assignment)
-            new_states << s
-            if s.find{|i| i.last == @instance[:Goal]}
-              found = true
-              break
+      threads = old_states.map do |current_state|
+        Thread.new {
+          @instance[:Users].each do |user|
+            @instance[:CR].each do |revocation|
+              new_states << apply_role_revocation(current_state, user, revocation)
+            end
+            @instance[:CA].each do |assignment|
+              s = apply_role_assignment(current_state, user, assignment)
+              new_states << s
+              if s.find{|i| i.last == @instance[:Goal]}
+                found = true
+                threads.each { |t| Thread.kill t }
+              end
             end
           end
-          @instance[:CR].each do |revocation|
-            new_states << apply_role_revocation(current_state, user, revocation)
-          end
-        end
-        break unless !found
+        }
       end
+      threads.each(&:join)
     end
     found
   end
