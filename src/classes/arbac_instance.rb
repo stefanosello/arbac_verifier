@@ -14,7 +14,7 @@ class ArbacInstance
   #
   # path - the String representation of the file path to parse in order to obtain the Hash representation of the role reachability problem
   #
-  # *Note*: @instance will be a Hash made as follows:
+  # *NOTE*: @instance will be a Hash made as follows:
   #         :Roles - set of strings, the available roles in the policy
   #         :Users - set of strings, the users present in the policy
   #         :UA    - set of arrays of (2) strings, the first string of each inner array represents the user, the second the role that the user has
