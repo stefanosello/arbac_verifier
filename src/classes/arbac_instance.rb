@@ -22,9 +22,9 @@ class ArbacInstance
   #         :CA    - set of arrays of (3) mixed where the first element is a string representing the role in power of assign; the second element is an array of two sets of strings,
   #                  representing respectively the positive preconditions and the negative ones needed to apply the assignment; the third element is a string representing the role to be assigned
   #         :Goal  - string, representing the role object of the reachability analysis for the given policy
-  #   
+  #
   def initialize(path)
-    @instance =forward_slicing(backward_slicing(parse_arbac_file(path)))
+    @instance = forward_slicing(backward_slicing(parse_arbac_file(path)))
   end
 
   # Public: Computes the solution of the role reachability problem for the active instance.
@@ -34,7 +34,7 @@ class ArbacInstance
   #
   # *NOTE* This method makes use of threads parallelize the computation of the derivates of a set of states: one thread for each state for which there is the need to compute the derivates.
   #        When a state contains the target, its thread kills all other threads and the method returns true.
-  # 
+  #
   # Returns true if the instance is satisfied, false otherwise
   #
   # Examples
