@@ -1,4 +1,5 @@
 # :markup: TomDoc
+require 'thread'
 require 'etc'
 
 # Public: Representation of an ARBAC role reachability problem
@@ -6,7 +7,6 @@ class ArbacInstance
   require_relative './../modules/arbac_module.rb'
   require_relative './../exceptions/computation_timed_out_exception.rb'
   include ArbacModule
-  require 'thread'
 
   # Public: Gets/Sets the Hash value of @instance
   attr_accessor :instance
