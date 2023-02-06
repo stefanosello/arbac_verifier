@@ -1,4 +1,5 @@
 # :markup: TomDoc
+require 'etc'
 
 # Public: Representation of an ARBAC role reachability problem
 class ArbacInstance
@@ -42,7 +43,7 @@ class ArbacInstance
   #   self.compute_reachability
   #   # => 0
   #
-  def compute_reachability()
+  def compute_reachability
     all_states = Set.new
     new_states = Set.new [@instance[:UA]]
     found = false
@@ -53,30 +54,31 @@ class ArbacInstance
       end
       old_states = new_states - all_states
       all_states += new_states
-      puts "Time: #{Time.now - start}, Number of States: #{old_states.length}"
       new_states = Set.new
-      threads = old_states.map do |current_state|
-        Thread.new {
-          thread = Thread.current
-          thread[:new_states] = Set.new
-          @instance[:Users].each do |user|
-            @instance[:CR].each do |revocation|
-              thread[:new_states] << apply_role_revocation(current_state, user, revocation)
-            end
-            @instance[:CA].each do |assignment|
-              s = apply_role_assignment(current_state, user, assignment)
-              thread[:new_states] << s
-              if s.find{|i| i.last == @instance[:Goal]}
-                found = true
-                threads.each { |t| Thread.kill t }
+      old_states.each_slice(Etc.nprocessors) do |old_states_batch|
+        threads = old_states_batch.map do |current_state|
+          Thread.new {
+            thread = Thread.current
+            thread[:new_states] = Set.new
+            @instance[:Users].each do |user|
+              @instance[:CR].each do |revocation|
+                thread[:new_states] << apply_role_revocation(current_state, user, revocation)
+              end
+              @instance[:CA].each do |assignment|
+                s = apply_role_assignment(current_state, user, assignment)
+                thread[:new_states] << s
+                if s.find{|i| i.last == @instance[:Goal]}
+                  found = true
+                  threads.each { |t| Thread.kill t }
+                end
               end
             end
-          end
-        }
-      end
-      unless found
-        threads.each(&:join)
-        new_states = threads.select{|t| !!t[:new_states]}.map{|t| [*t[:new_states]]}.flatten.to_set
+          }
+        end
+        unless found
+          threads.each(&:join)
+          new_states = threads.select{|t| !!t[:new_states]}.map{|t| [*t[:new_states]]}.flatten.to_set
+        end
       end
     end
     found
