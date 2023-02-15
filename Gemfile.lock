@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    arbac_verifier (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -20,7 +25,8 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  arbac_verifier!
   rspec
 
 BUNDLED WITH
-   2.4.6
+   2.3.7

@@ -3,6 +3,7 @@
 # Collection of utilities to manipulate .arbac files (defining an ARBAC role reachability problem) to parse and eventually solve the problem
 module ArbacModule
   require 'set'
+  module_function
 
   # Public: Parse a given and properly formatted arbac file into an easily usable hash
   #
@@ -23,7 +24,7 @@ module ArbacModule
   #   # => {:Roles=>["Teacher", "Student", "TA"], :Users=>["stefano", "alice", "bob"], :UA=>[["stefano", "Teacher"], ["alice", "TA"]], :CR=>[["Teacher", "Student"], ["Teacher", "TA"]], :CA=>[["Teacher", [[], ["Teacher", "TA"]], "Student"], ["Teacher", [[], ["Student"]], "TA"], ["Teacher", [["TA"], ["Student"]], "Teacher"]], :Goal=>"Student"}
   #
   def parse_arbac_file(path)
-    file = File.open(path)        
+    file = File.open(path)
     lines = file.readlines.map{|l| l.chomp!(" ;\n")}.select{|l| !(l.nil?)}
     result = Hash.new
     lines.each do |line|
@@ -174,5 +175,5 @@ module ArbacModule
       new_state
     end
   end
-  
+
 end

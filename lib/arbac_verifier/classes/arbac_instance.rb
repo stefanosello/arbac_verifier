@@ -6,7 +6,6 @@ require 'etc'
 class ArbacInstance
   require_relative './../modules/arbac_module.rb'
   require_relative './../exceptions/computation_timed_out_exception.rb'
-  include ArbacModule
 
   # Public: Gets/Sets the Hash value of @instance
   attr_accessor :instance
@@ -25,7 +24,7 @@ class ArbacInstance
   #         :Goal  - string, representing the role object of the reachability analysis for the given policy
   #
   def initialize(path)
-    @instance = forward_slicing(backward_slicing(parse_arbac_file(path)))
+    @instance = ArbacModule::forward_slicing(ArbacModule::backward_slicing(ArbacModule::parse_arbac_file(path)))
   end
 
   # Public: Computes the solution of the role reachability problem for the active instance.
