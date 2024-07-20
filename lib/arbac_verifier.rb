@@ -1,1 +1,1 @@
-require 'arbac_verifier/classes/arbac_instance'
+require 'arbac_verifier/classes/arbac_reachability_verifier'

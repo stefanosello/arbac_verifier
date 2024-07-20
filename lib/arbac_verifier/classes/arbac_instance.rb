@@ -1,86 +1,149 @@
-# :markup: TomDoc
-require 'thread'
-require 'etc'
+# frozen_string_literal: true
+# typed: true
+require 'sorbet-runtime'
+require 'set'
+require 'arbac_verifier/classes/user_role'
+require 'arbac_verifier/classes/rules/can_assign_rule'
+require 'arbac_verifier/classes/rules/can_revoke_rule'
 
-# Public: Representation of an ARBAC role reachability problem
 class ArbacInstance
-  require_relative './../modules/arbac_module.rb'
-  require_relative './../exceptions/computation_timed_out_exception.rb'
+  extend T::Sig
 
-  # Public: Gets/Sets the Hash value of @instance
-  attr_accessor :instance
+  sig { returns T::Set[Symbol] }
+  attr_reader :roles
 
-  # Public: Initializes @instance with the parsed hash value of the role reachability problem
-  #
-  # path - the String representation of the file path to parse in order to obtain the Hash representation of the role reachability problem
-  #
-  # *NOTE*: @instance will be a Hash made as follows:
-  #         :Roles - set of strings, the available roles in the policy
-  #         :Users - set of strings, the users present in the policy
-  #         :UA    - set of arrays of (2) strings, the first string of each inner array represents the user, the second the role that the user has
-  #         :UR    - set of arrays of (2) strings, the first string of each inner array represents the role in power of revoke, the second the role to be revoked
-  #         :CA    - set of arrays of (3) mixed where the first element is a string representing the role in power of assign; the second element is an array of two sets of strings,
-  #                  representing respectively the positive preconditions and the negative ones needed to apply the assignment; the third element is a string representing the role to be assigned
-  #         :Goal  - string, representing the role object of the reachability analysis for the given policy
-  #
-  def initialize(path)
-    @instance = ArbacModule::forward_slicing(ArbacModule::backward_slicing(ArbacModule::parse_arbac_file(path)))
-  end
+  sig { returns T::Set[String] }
+  attr_reader :users
 
-  # Public: Computes the solution of the role reachability problem for the active instance.
-  #         *How does this method works?* It takes the initial state (association user-role) and computes all the possible states applying the "assign" and "revoke" rules.
-  #         Then it iterates over the new computed states (those different from the initial state) computing each time all possible derivates.
-  #         The method terminates when its execution exceeds 15oo seconds, when there are no new states to inpect or when one of the computed states contains the role to reach.
-  #
-  # *NOTE* This method makes use of threads parallelize the computation of the derivates of a set of states: one thread for each state for which there is the need to compute the derivates.
-  #        When a state contains the target, its thread kills all other threads and the method returns true.
-  #
-  # Returns true if the instance is satisfied, false otherwise
-  #
-  # Examples
-  #
-  #   self.compute_reachability
-  #   # => 0
-  #
-  def compute_reachability
-    all_states = Set.new
-    new_states = Set.new [@instance[:UA]]
-    found = false
-    start = Time.now
-    while !found && (new_states - all_states).length > 0
-      if (Time.now - start) > 1500
-        throw ComputationTimedOutException.new
-      end
-      old_states = new_states - all_states
-      all_states += new_states
-      new_states = Set.new
-      old_states.each_slice(Etc.nprocessors) do |old_states_batch|
-        threads = old_states_batch.map do |current_state|
-          Thread.new {
-            thread = Thread.current
-            thread[:new_states] = Set.new
-            @instance[:Users].each do |user|
-              @instance[:CR].each do |revocation|
-                thread[:new_states] << apply_role_revocation(current_state, user, revocation)
-              end
-              @instance[:CA].each do |assignment|
-                s = apply_role_assignment(current_state, user, assignment)
-                thread[:new_states] << s
-                if s.find{|i| i.last == @instance[:Goal]}
-                  found = true
-                  threads.each { |t| Thread.kill t }
-                end
-              end
-            end
-          }
-        end
-        unless found
-          threads.each(&:join)
-          new_states = threads.select{|t| !!t[:new_states]}.map{|t| [*t[:new_states]]}.flatten.to_set
-        end
-      end
+  sig { returns T::Set[UserRole] }
+  attr_reader :user_to_role
+
+  sig { returns T::Set[CanRevokeRule]}
+  attr_reader :can_revoke_rules
+
+  sig { returns T::Set[CanAssignRule]}
+  attr_reader :can_assign_rules
+
+  sig { returns Symbol }
+  attr_reader :goal
+
+  sig { params(params: T.any(Symbol, T::Set[String], T::Set[Symbol], T::Set[UserRole], T::Set[CanAssignRule], T::Set[CanRevokeRule], String)).void }
+  def initialize(**params)
+    unless params[:path].nil?
+      initialize_by_file_path(T.cast(params[:path], String))
+    else
+      initialize_by_attributes(
+        T.cast(params[:goal], Symbol),
+        T.cast(params[:roles], T::Set[Symbol]),
+        T.cast(params[:users], T::Set[String]),
+        T.cast(params[:user_to_role], T::Set[UserRole]),
+        T.cast(params[:can_assign_rules], T::Set[CanAssignRule]),
+        T.cast(params[:can_revoke_rules], T::Set[CanRevokeRule])
+      )
     end
-    found
   end
 
+  sig { params(goal: Symbol, roles: T::Set[Symbol], users: T::Set[String], user_to_role: T::Set[UserRole], can_assign_rules: T::Set[CanAssignRule], can_revoke_rules: T::Set[CanRevokeRule]).void }
+  private def initialize_by_attributes(goal, roles, users, user_to_role, can_assign_rules, can_revoke_rules)
+    @goal = goal
+    @roles = roles
+    @users = users
+    @user_to_role = user_to_role
+    @can_assign_rules = can_assign_rules
+    @can_revoke_rules = can_revoke_rules
+  end
+
+  sig { params(path: String).void }
+  private def initialize_by_file_path(path)
+    file = File.open(path)
+    spec_key_to_line_content = get_lines(file)
+    @goal = get_goal(T.must(spec_key_to_line_content[:Goal]))
+    @roles = get_roles(T.must(spec_key_to_line_content[:Roles]))
+    @users = T.must(spec_key_to_line_content[:Users]).to_set
+    @user_to_role = get_user_to_roles(T.must(spec_key_to_line_content[:UA]))
+    @can_assign_rules = get_assign_rules(T.must(spec_key_to_line_content[:CA]))
+    @can_revoke_rules = get_revoke_rules(T.must(spec_key_to_line_content[:CR]))
+  end
+
+  sig { params(file: File).returns T::Hash[Symbol,T::Array[String]]}
+  private def get_lines(file)
+    lines = T.let(file.readlines
+                .map { |l| l.chomp!(" ;\n") }
+                .select { |l| !(l.nil?) }
+                .map { |l| T.must l }, T::Array[String])
+
+    spec_key_to_line_content = lines.map do |l|
+      line_items = T.must l.split(" ")
+      key = T.must line_items.first
+      value = T.must(line_items[1..]).map { |l| T.must l }
+      [key.to_sym, value]
+    end.to_h
+
+    validate_line_keys spec_key_to_line_content
+
+    spec_key_to_line_content
+  end
+
+  sig { params(lines: T::Hash[Symbol,T::Array[String]]).void }
+  private def validate_line_keys(lines)
+    unless (lines.keys - [:Goal,:CA,:CR,:UA,:Users,:Roles]).empty?
+      throw Exception.new("Wrong spec file format.")
+    end
+  end
+
+  sig { params(goal_ary: T::Array[String]).returns Symbol }
+  private def get_goal(goal_ary)
+    goal = T.must goal_ary[0]
+    goal.to_sym
+  end
+
+  sig { params(roles_ary: T::Array[String]).returns T::Set[Symbol] }
+  private def get_roles(roles_ary)
+    not_null_roles = T.must roles_ary.reject(&:nil?)
+    not_null_roles.map do |r|
+      role = T.must r
+      role.to_sym
+    end.to_set
+  end
+
+  sig { params(user_to_role: T::Array[String]).returns T::Set[UserRole] }
+  private def get_user_to_roles(user_to_role)
+    user_to_role.map do |item|
+      params = T.must item.slice(1,item.length - 2)
+      params = T.must params.split(",")
+      user = T.must params[0]
+      role = T.must params[1]
+      UserRole.new(user, role.to_sym)
+    end.to_set
+  end
+
+  sig { params(rules: T::Array[String]).returns T::Set[CanRevokeRule] }
+  private def get_revoke_rules(rules)
+    rules.map do |item|
+      params = T.must item.slice(1,item.length - 2)
+      params = T.must params.split(",")
+      revoker_role = T.must params[0]
+      revoked_role = T.must params[1]
+      CanRevokeRule.new(revoker_role.to_sym, revoked_role.to_sym)
+    end.to_set
+  end
+
+  sig { params(rules: T::Array[String]).returns T::Set[CanAssignRule] }
+  private def get_assign_rules(rules)
+    rules.map do |item|
+      params = T.must item.slice(1,item.length - 2)
+      params = T.must params.split(",")
+      assigner_role = T.must params[0]
+      assigned_role = T.must params[2]
+      preconditions_string = T.must params[1]
+
+      roles = T.must preconditions_string.split("&")
+      negatives_string = roles.select{|i| i.start_with? "-"}
+      positives_string = roles - negatives_string
+
+      positives = positives_string.map { |p| p.to_sym }.to_set
+      negatives = negatives_string.map { |n| T.must(n.slice(1, n.length - 1)).to_sym }.to_set
+      CanAssignRule.new(assigner_role.to_sym, positives, negatives, assigned_role.to_sym)
+    end.to_set
+  end
 end
