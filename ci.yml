@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  type-check:
+    name: Sorbet Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.1
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Sorbet
+        run: bundle exec srb tc
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: type-check
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 3.0, 3.1] # Specify the Ruby versions you want to test against
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run tests
+        run: bundle exec rspec
+
+  deploy:
+    name: Deploy Gem
+    runs-on: ubuntu-latest
+    needs: [type-check, test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.1
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build gem
+        run: gem build your_gem_name.gemspec
+
+      - name: Publish gem
+        env:
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: gem push your_gem_name-*.gem
