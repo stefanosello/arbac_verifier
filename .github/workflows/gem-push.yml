@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 3.0, 3.1]
+        ruby-version: [3.1]
 
     steps:
     - name: Checkout code
@@ -54,6 +54,7 @@ jobs:
     name: Build + Publish
     runs-on: ubuntu-latest
     environment: rubygem
+    needs: [type-check, test]
     permissions:
       contents: read
       packages: write
