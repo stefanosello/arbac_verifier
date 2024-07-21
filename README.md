@@ -54,7 +54,7 @@ Goal Student ;
 
 ## Usage
 Once installed, the gem can be used to manage different tasks related to arbac policies.
-```{ruby}
+```{Ruby}
 require 'arbac_verifier'
 require 'set
 
@@ -78,7 +78,7 @@ policy1 = ArbacInstance.new(
 
 Once the problem instance has been defined, the gem provides two simplification algorithms that can be used to reduce the size of the reachability problem.
 These algorithms do not modify the original policy and return a new simplified policy.
-```{ruby}
+```{Ruby}
 require 'arbac_verifier'
 
 # apply backward slicing
@@ -86,7 +86,7 @@ policy0bs =  ArbacUtilsModule::backward_slicing(policy0)
 policy0fs = ArbacUtilsModule::forward_slicing(policy0)
 ```
 A Role Reachability Problem solution can be computed using the `ArbacReachabilityVerifier` class.
-```{ruby}
+```{Ruby}
 require 'arbac_verifier'
 
 # Creare new reachability verifier instance starting from an .arbac file
