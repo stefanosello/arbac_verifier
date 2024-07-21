@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "arbac_verifier"
-  s.version     = "1.0.0"
+  s.version     = "1.0.1"
   s.summary     = "ARBAC role reachability problem solutor"
   s.description = "A simple solutor for role reachability problem instances expressed in ARBAC format."
   s.authors     = ["Stefano Sello"]
