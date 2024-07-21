@@ -1,4 +1,5 @@
-# arbac_verifier
+![logo.png](logo.png)
+
 [![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](https://mr5he11.github.io/arbac_verifier) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
 
 
