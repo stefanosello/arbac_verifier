@@ -1,3 +1,4 @@
+# typed: false
 require 'arbac_verifier/classes/arbac_reachability_verifier'
 require 'spec_helper'
 
