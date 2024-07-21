@@ -11,7 +11,7 @@ describe ArbacReachabilityVerifier do
     end
   end
 
-  describe "#verify" do
+  describe ".verify" do
     context "given policy #0" do
       it "verifies correctly the problem" do
         expect(arbac_instance.verify).to be(true)
@@ -24,15 +24,6 @@ describe ArbacReachabilityVerifier do
         expect(arbac_instance.verify).to be(false)
       end
     end
-
-=begin
-    context "given policy #2" do
-      let(:config_file_path) { "spec/fixtures/policies/policy2.arbac" }
-      it "verifies correctly the problem" do
-        expect(arbac_instance.verify).to be(true)
-      end
-    end
-=end
 
     context "given policy #3" do
       let(:config_file_path) { "spec/fixtures/policies/policy3.arbac" }

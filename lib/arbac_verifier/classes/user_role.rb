@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # typed: true
-extend T::Sig
+require 'sorbet-runtime'
 
 class UserRole
   extend T::Sig

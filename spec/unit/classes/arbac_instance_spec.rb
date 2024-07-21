@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 require 'arbac_verifier/classes/arbac_instance'
-
 require 'rspec'
 
-describe 'ArbacInstance' do
+describe ArbacInstance do
   context 'initialized given a file path' do
     it 'parses successfully the given file and returns a valid arbac instance' do
       arbac_instance = ArbacInstance.new(path: "spec/fixtures/policies/policy0.arbac")
