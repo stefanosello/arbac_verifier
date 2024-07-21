@@ -29,9 +29,7 @@ class ArbacInstance
 
   sig { params(params: T.any(Symbol, T::Set[String], T::Set[Symbol], T::Set[UserRole], T::Set[CanAssignRule], T::Set[CanRevokeRule], String)).void }
   def initialize(**params)
-    unless params[:path].nil?
-      initialize_by_file_path(T.cast(params[:path], String))
-    else
+    if params[:path].nil?
       initialize_by_attributes(
         T.cast(params[:goal], Symbol),
         T.cast(params[:roles], T::Set[Symbol]),
@@ -40,6 +38,8 @@ class ArbacInstance
         T.cast(params[:can_assign_rules], T::Set[CanAssignRule]),
         T.cast(params[:can_revoke_rules], T::Set[CanRevokeRule])
       )
+    else
+      initialize_by_file_path(T.cast(params[:path], String))
     end
   end
 

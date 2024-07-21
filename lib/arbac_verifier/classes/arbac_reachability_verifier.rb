@@ -11,13 +11,14 @@ class ArbacReachabilityVerifier
   sig { returns ArbacInstance }
   attr_reader :instance
 
-  sig { params(args: T.any(String, ArbacInstance)).void }
-  def initialize(**args)
-    if !(args[:instance].nil?)
-      @instance = T.let(T.cast(args[:instance], ArbacInstance), ArbacInstance)
-    else
-      path = T.cast(args[:path], String)
+  sig { params(params: T.any(String, ArbacInstance)).void }
+  def initialize(**params)
+    if params[:instance].nil?
+      path = T.cast(params[:path], String)
       @instance = ArbacUtilsModule::forward_slicing(ArbacUtilsModule::backward_slicing(ArbacInstance.new(path: path)))
+    else
+      instance = T.cast(params[:instance], ArbacInstance)
+      @instance = instance
     end
   end
 

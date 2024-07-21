@@ -1,7 +1,6 @@
-# typed: true
+# typed: strict
 require 'sorbet-runtime'
 
-# Collection of utilities to manipulate .arbac files (defining an ARBAC role reachability problem) to parse and eventually solve the problem
 module ArbacUtilsModule
   extend T::Sig
 

@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 require 'arbac_verifier/classes/rules/can_assign_rule'
 require 'arbac_verifier/classes/user_role'

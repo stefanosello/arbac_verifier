@@ -1,13 +1,14 @@
 PATH
   remote: .
   specs:
-    arbac_verifier (1.0.1)
+    arbac_verifier (1.0.2)
       sorbet-runtime-stub (~> 0.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.5.0)
+    docile (1.4.0)
     erubi (1.13.0)
     netrc (0.11.0)
     parallel (1.25.1)
@@ -15,6 +16,8 @@ GEM
     rbi (0.1.13)
       prism (>= 0.18.0, < 1.0.0)
       sorbet-runtime (>= 0.5.9204)
+    rexml (3.3.2)
+      strscan
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -28,6 +31,15 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-cobertura (2.1.0)
+      rexml
+      simplecov (~> 0.19)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sorbet (0.5.11481)
       sorbet-static (= 0.5.11481)
     sorbet-runtime (0.5.11481)
@@ -41,6 +53,7 @@ GEM
       prism (>= 0.28.0)
       sorbet-static-and-runtime (>= 0.5.10187)
       thor (>= 0.19.2)
+    strscan (3.1.0)
     tapioca (0.15.1)
       bundler (>= 2.2.25)
       netrc (>= 0.11.0)
@@ -62,6 +75,8 @@ PLATFORMS
 DEPENDENCIES
   arbac_verifier!
   rspec (~> 3.12)
+  simplecov
+  simplecov-cobertura
   sorbet
   sorbet-runtime
   tapioca
