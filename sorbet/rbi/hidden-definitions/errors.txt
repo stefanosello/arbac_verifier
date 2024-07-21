@@ -8782,14 +8782,173 @@
 # 
 #       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                       ^^^^^^^^^^
-# uninitialized constant REXML
+# uninitialized constant REXML::Namespace::NAME
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant REXML::Namespace::NAMECHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace::NAME_CHAR
+# uninitialized constant REXML::Namespace::NAME_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace::NAME_STR
+#                REXML::Namespace::NAMECHAR
+# uninitialized constant REXML::Namespace::NAME_START_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant REXML::Namespace::NAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace::NCNAME_STR
+# uninitialized constant REXML::Namespace::NCNAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace::NAME_STR
+# uninitialized constant REXML::Namespace::NMTOKEN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace::NMTOKENS
+# uninitialized constant REXML::Namespace::NMTOKENS
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XMLTokens
+# uninitialized constant REXML::Namespace::REFERENCE
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::ReferenceWriter
+# uninitialized constant REXML::Parsers::XPathParser::NAME
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::QNAME
+# uninitialized constant REXML::Parsers::XPathParser::NAMECHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::NAME_CHAR
+# uninitialized constant REXML::Parsers::XPathParser::NAME_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::NAME_STR
+#                REXML::Parsers::XPathParser::NAMECHAR
+# uninitialized constant REXML::Parsers::XPathParser::NAME_START_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace
+# uninitialized constant REXML::Parsers::XPathParser::NAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::NCNAME_STR
+# uninitialized constant REXML::Parsers::XPathParser::NCNAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::NAME_STR
+# uninitialized constant REXML::Parsers::XPathParser::NMTOKEN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Parsers::XPathParser::NMTOKENS
+# uninitialized constant REXML::Parsers::XPathParser::NMTOKENS
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XMLTokens
+# uninitialized constant REXML::Parsers::XPathParser::REFERENCE
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::ReferenceWriter
+# uninitialized constant REXML::QuickPath
 # 
 #       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                       ^^^^^^^^^^
-# uninitialized constant REXML
+# uninitialized constant REXML::QuickPath
 # 
 #       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                       ^^^^^^^^^^
+# uninitialized constant REXML::SAX2Listener
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::SAX2Listener
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::StreamListener
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::StreamListener
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::SyncEnumerator
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::SyncEnumerator
+# 
+#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                       ^^^^^^^^^^
+# uninitialized constant REXML::XPathParser::NAME
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant REXML::XPathParser::NAMECHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XPathParser::NAME_CHAR
+# uninitialized constant REXML::XPathParser::NAME_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XPathParser::NAME_STR
+#                REXML::XPathParser::NAMECHAR
+# uninitialized constant REXML::XPathParser::NAME_START_CHAR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::Namespace
+# uninitialized constant REXML::XPathParser::NAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XPathParser::NCNAME_STR
+# uninitialized constant REXML::XPathParser::NCNAME_STR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XPathParser::NAME_STR
+# uninitialized constant REXML::XPathParser::NMTOKEN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XPathParser::NMTOKENS
+# uninitialized constant REXML::XPathParser::NMTOKENS
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::XMLTokens
+# uninitialized constant REXML::XPathParser::REFERENCE
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  REXML::ReferenceWriter
 # uninitialized constant RSpec::Core::ExampleGroup::BE_PREDICATE_REGEX
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -9322,18 +9481,6 @@
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
 # wrong constant name new
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
-# wrong constant name bol?
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
-# wrong constant name fixed_anchor?
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
-# wrong constant name initialize
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^

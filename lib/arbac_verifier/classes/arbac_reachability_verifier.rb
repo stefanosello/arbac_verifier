@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 require 'thread'
 require 'etc'
 require 'arbac_verifier/classes/arbac_instance'

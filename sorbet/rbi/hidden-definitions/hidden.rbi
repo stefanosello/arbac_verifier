@@ -4453,6 +4453,27 @@ module Process
   def self._fork(); end
 end
 
+module REXML::Namespace
+  NAME_WITHOUT_NAMESPACE = ::T.let(nil, ::T.untyped)
+end
+
+class REXML::Parsers::BaseParser
+  EXTERNAL_ID_PUBLIC = ::T.let(nil, ::T.untyped)
+  EXTERNAL_ID_SYSTEM = ::T.let(nil, ::T.untyped)
+  PUBLIC_ID = ::T.let(nil, ::T.untyped)
+  QNAME = ::T.let(nil, ::T.untyped)
+  QNAME_STR = ::T.let(nil, ::T.untyped)
+end
+
+class REXML::Parsers::XPathParser
+  LOCAL_NAME_WILDCARD = ::T.let(nil, ::T.untyped)
+  PREFIX_WILDCARD = ::T.let(nil, ::T.untyped)
+end
+
+class REXML::XPathParser
+  DEBUG = ::T.let(nil, ::T.untyped)
+end
+
 module RSpec
   MODULES_TO_AUTOLOAD = ::T.let(nil, ::T.untyped)
 end
@@ -4912,6 +4933,12 @@ class SimpleCov::ExitCodes::MaximumCoverageDropCheck
   MAX_DROP_ACCURACY = ::T.let(nil, ::T.untyped)
 end
 
+class SimpleCov::Formatter::CoberturaFormatter
+  DTD_URL = ::T.let(nil, ::T.untyped)
+  RESULT_FILE_NAME = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class SimpleCov::Formatter::HTMLFormatter
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -5138,11 +5165,6 @@ class StringIO
 end
 
 class StringScanner
-  def bol?(); end
-
-  def fixed_anchor?(); end
-
-  def initialize(*arg); end
   Id = ::T.let(nil, ::T.untyped)
   Version = ::T.let(nil, ::T.untyped)
 end
