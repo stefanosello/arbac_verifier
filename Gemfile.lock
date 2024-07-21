@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arbac_verifier (1.0.2)
+    arbac_verifier (1.0.5)
       sorbet-runtime-stub (~> 0.2)
 
 GEM

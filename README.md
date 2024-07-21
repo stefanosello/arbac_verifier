@@ -1,7 +1,7 @@
 ![logo.png](logo.png)
 
-[![codecov](https://codecov.io/github/stefanosello/arbac_verifier/branch/development/graph/badge.svg?token=VXWHKJUJR2)](https://codecov.io/github/stefanosello/arbac_verifier)
-[![Ruby Gem](https://github.com/stefanosello/arbac_verifier/actions/workflows/gem-push.yml/badge.svg?branch=development)](https://github.com/stefanosello/arbac_verifier/actions/workflows/gem-push.yml)
+[![codecov](https://codecov.io/github/stefanosello/arbac_verifier/branch/main/graph/badge.svg?token=VXWHKJUJR2)](https://codecov.io/github/stefanosello/arbac_verifier)
+[![Ruby Gem](https://github.com/stefanosello/arbac_verifier/actions/workflows/gem-push.yml/badge.svg?branch=main)](https://github.com/stefanosello/arbac_verifier/actions/workflows/gem-push.yml)
 [![Gem Version](https://badge.fury.io/rb/arbac_verifier.svg)](https://badge.fury.io/rb/arbac_verifier)
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
 
