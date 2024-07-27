@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "arbac_verifier"
-  s.version     = "1.0.5"
+  s.version     = "1.1.0"
   s.summary     = "ARBAC role reachability problem solutor"
   s.description = <<-HEREDOC.chomp
     A way to solve simple ARBAC role reachability problems, given an .arbac definition file or a pre-built problem instance.
@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
     lib/arbac_verifier/classes/user_role.rb
     lib/arbac_verifier/exceptions/computation_timed_out_exception.rb
     lib/arbac_verifier/modules/arbac_utils_module.rb
+    logo.png
   ]
   s.homepage    = "https://github.com/stefanosello/arbac_verifier"
   s.license     = "Apache-2.0"

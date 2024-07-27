@@ -83,6 +83,8 @@ require 'arbac_verifier'
 
 # apply backward slicing
 policy0bs =  ArbacUtilsModule::backward_slicing(policy0)
+
+# apply forward slicing
 policy0fs = ArbacUtilsModule::forward_slicing(policy0)
 ```
 A Role Reachability Problem solution can be computed using the `ArbacReachabilityVerifier` class.
