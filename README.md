@@ -59,20 +59,23 @@ require 'arbac_verifier'
 require 'set
 
 # Create new Arbac instance from .arbac file
-policy0 = ArbacInstance.new(path: 'policy0.arbac')
+policy0 = ARBACVerifier::Instance.new(path: 'policy0.arbac')
 
 # Create new Arbac instance passing single attributes
-policy1 = ArbacInstance.new(
+policy1 = ARBACVerifier::Instance.new(
   goal: :Student,
   roles: [:Teacher, :Student, :TA].to_set,
   users: ["stefano", "alice", "bob"].to_set,
-  user_to_role: [UserRole.new("stefano", :Teacher), UserRole.new("alice", :TA)].to_set,
+  user_to_role: [ARBACVerifier::UserRole.new("stefano", :Teacher), ARBACVerifier::UserRole.new("alice", :TA)].to_set,
   can_assign_rules: [
-                      CanAssignRule.new(:Teacher, [].to_set, [:Teacher, :TA].to_set, :Student),
-                      CanAssignRule.new(:Teacher, [].to_set, [:Student].to_set, :TA),
-                      CanAssignRule.new(:Teacher, [:TA].to_set, [:Student].to_set, :Teacher)
+                      ARBACVerifier::Rules::CanAssign.new(:Teacher, [].to_set, [:Teacher, :TA].to_set, :Student),
+                      ARBACVerifier::Rules::CanAssign.new(:Teacher, [].to_set, [:Student].to_set, :TA),
+                      ARBACVerifier::Rules::CanAssign.new(:Teacher, [:TA].to_set, [:Student].to_set, :Teacher)
                     ].to_set,
-  can_revoke_rules: [CanRevokeRule.new(:Teacher, :Student), CanRevokeRule.new(:Teacher, :TA)].to_set
+  can_revoke_rules: [
+                      ARBACVerifier::Rules::CanRevoke.new(:Teacher, :Student),
+                      ARBACVerifier::Rules::CanRevoke.new(:Teacher, :TA)
+                    ].to_set
 )
 ```
 
@@ -81,21 +84,23 @@ These algorithms do not modify the original policy and return a new simplified p
 ```{Ruby}
 require 'arbac_verifier'
 
+include ARBACVerifier::Utils
+
 # apply backward slicing
-policy0bs =  ArbacUtilsModule::backward_slicing(policy0)
+policy0bs =  backward_slicing(policy0)
 
 # apply forward slicing
-policy0fs = ArbacUtilsModule::forward_slicing(policy0)
+policy0fs = forward_slicing(policy0)
 ```
 A Role Reachability Problem solution can be computed using the `ArbacReachabilityVerifier` class.
 ```{Ruby}
 require 'arbac_verifier'
 
 # Creare new reachability verifier instance starting from an .arbac file
-verifier0 = ArbacReachabilityVerifier.new(path: 'policy0.arbac')
+verifier0 = ARBACVerifier::ReachabilityVerifier.new(path: 'policy0.arbac')
 
 # or from an already created ArbacInstance
-verifier1 = ArbacReachabilityVerifier.new(instance: policy1)
+verifier1 = ARBACVerifier::ReachabilityVerifier.new(instance: policy1)
 
 # and then compute reachability
 verifier0.verify # => true
