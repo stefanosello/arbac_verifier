@@ -7,9 +7,11 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/arbac_verifier/all/arbac_verifier.rbi
 #
-# arbac_verifier-1.0.1
+# arbac_verifier-1.0.6
 
-class ArbacReachabilityVerifier
+module ARBACVerifier
+end
+class ARBACVerifier::ReachabilityVerifier
   def initialize(*args, **, &blk); end
   def instance(*args, **, &blk); end
   def verify(*args, **, &blk); end

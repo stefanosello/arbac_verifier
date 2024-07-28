@@ -1,17 +1,17 @@
 # typed: false
 # frozen_string_literal: true
-require 'arbac_verifier/classes/rules/can_revoke_rule'
+require 'arbac_verifier/classes/rules/can_revoke'
 require 'arbac_verifier/classes/user_role'
 require 'rspec'
 require 'set'
 
-describe CanRevokeRule do
-  let (:sut) { CanRevokeRule.new(:Boss, :Vice) }
+describe ARBACVerifier::Rules::CanRevoke do
+  let (:sut) { ARBACVerifier::Rules::CanRevoke.new(:Boss, :Vice) }
   let (:state) { [
-    UserRole.new("alberto", :Boss),
-    UserRole.new("davide", :Vice),
-    UserRole.new("luca", :Vice),
-    UserRole.new("damiano", :Candidate)
+    ARBACVerifier::UserRole.new("alberto", :Boss),
+    ARBACVerifier::UserRole.new("davide", :Vice),
+    ARBACVerifier::UserRole.new("luca", :Vice),
+    ARBACVerifier::UserRole.new("damiano", :Candidate)
   ].to_set }
 
   describe '#initialize' do
@@ -55,7 +55,7 @@ describe CanRevokeRule do
 
     it 'should return a new state with the applied rule' do
       result = sut.apply(state, "davide")
-      expect(result).to_not include(UserRole.new("davide", :Vice))
+      expect(result).to_not include(ARBACVerifier::UserRole.new("davide", :Vice))
     end
 
   end

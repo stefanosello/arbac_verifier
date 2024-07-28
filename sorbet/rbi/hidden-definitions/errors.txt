@@ -3949,7 +3949,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::FTP::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -4085,7 +4084,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::File::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -4233,7 +4231,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::Generic::VERSION
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -4581,7 +4578,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::HTTP::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -4710,7 +4706,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::HTTPS::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -4838,7 +4833,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::LDAP::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -5048,7 +5042,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::LDAPS::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -5168,7 +5161,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant Bundler::URI::MailTo::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -5680,6 +5672,133 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
+# uninitialized constant Concurrent::AbstractExecutorService::DEBUG
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::AbstractExecutorService::ERROR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Concurrent::Error
+#                IOError
+#                Errno
+# uninitialized constant Concurrent::AbstractExecutorService::FATAL
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::AbstractExecutorService::INFO
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::AbstractExecutorService::UNKNOWN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::AbstractExecutorService::WARN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Warning
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::DEBUG
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::ERROR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Concurrent::Error
+#                IOError
+#                Errno
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::FALLBACK_POLICIES
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::FATAL
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::INFO
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::UNKNOWN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::RubyThreadPoolExecutor::WARN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Warning
+# uninitialized constant DEBUG
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant ERROR
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# Did you mean?  IOError
+#                Errno
+# uninitialized constant FATAL
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant INFO
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant UNKNOWN
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant VERSION
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant WARN
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# Did you mean?  Warning
+# uninitialized constant VERSION
+# 
+#     ::Object.const_get(n)
+#             ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::DEBUG
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::ERROR
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Concurrent::Error
+#                IOError
+#                Errno
+# uninitialized constant Concurrent::TimerTask::FALLBACK_POLICIES
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::FATAL
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::INFO
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::UNKNOWN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Concurrent::TimerTask::WARN
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# Did you mean?  Warning
 # uninitialized constant Continuation
 # 
 #       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -7976,14 +8095,30 @@
 # 
 #       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                       ^^^^^^^^^^
-# uninitialized constant Logger
+# wrong constant name debug!
 # 
-#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                       ^^^^^^^^^^
-# uninitialized constant Logger
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# wrong constant name error!
 # 
-#       my_klass = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                       ^^^^^^^^^^
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# wrong constant name fatal!
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# wrong constant name info!
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# wrong constant name warn!
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
+# uninitialized constant Logger::LogDevice::SiD
+# 
+#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
+#                         ^^^^^^^^^^
 # wrong constant name match
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -8949,18 +9084,6 @@
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
 # Did you mean?  REXML::ReferenceWriter
-# uninitialized constant RSpec::Core::ExampleGroup::BE_PREDICATE_REGEX
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
-# uninitialized constant RSpec::Core::ExampleGroup::DYNAMIC_MATCHER_REGEX
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
-# uninitialized constant RSpec::Core::ExampleGroup::HAS_REGEX
-# 
-#         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
-#                         ^^^^^^^^^^
 # uninitialized constant RSpec::Core::ExampleGroup::NOT_YET_IMPLEMENTED
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
@@ -9741,7 +9864,6 @@
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess
 #                         ^^^^^^^^^^
-# Did you mean?  UserRole
 # uninitialized constant URI::File::USE_REGISTRY
 # 
 #         my_value = klass.const_get(name, false) # rubocop:disable PrisonGuard/NoDynamicConstAccess

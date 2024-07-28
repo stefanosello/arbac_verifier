@@ -1,20 +1,20 @@
 # typed: false
 # frozen_string_literal: true
-require 'arbac_verifier/classes/rules/can_assign_rule'
+require 'arbac_verifier/classes/rules/can_assign'
 require 'arbac_verifier/classes/user_role'
 require 'rspec'
 require 'set'
 
-describe CanAssignRule do
-  let (:sut) { CanAssignRule.new(:Boss, [:Staff,:Candidate].to_set, [:Discarded].to_set, :Vice) }
+describe ARBACVerifier::Rules::CanAssign do
+  let (:sut) { ARBACVerifier::Rules::CanAssign.new(:Boss, [:Staff,:Candidate].to_set, [:Discarded].to_set, :Vice) }
   let (:state) { [
-    UserRole.new("alberto", :Boss),
-    UserRole.new("davide", :Staff),
-    UserRole.new("davide", :Candidate),
-    UserRole.new("enrico", :Staff),
-    UserRole.new("enrico", :Candidate),
-    UserRole.new("enrico", :Discarded),
-    UserRole.new("luca", :Candidate)
+    ARBACVerifier::UserRole.new("alberto", :Boss),
+    ARBACVerifier::UserRole.new("davide", :Staff),
+    ARBACVerifier::UserRole.new("davide", :Candidate),
+    ARBACVerifier::UserRole.new("enrico", :Staff),
+    ARBACVerifier::UserRole.new("enrico", :Candidate),
+    ARBACVerifier::UserRole.new("enrico", :Discarded),
+    ARBACVerifier::UserRole.new("luca", :Candidate)
   ].to_set }
 
   describe '#initialize' do
@@ -70,7 +70,7 @@ describe CanAssignRule do
 
     it 'should return a new state with the applied rule' do
       result = sut.apply(state, "davide")
-      expect(result).to include(UserRole.new("davide", :Vice))
+      expect(result).to include(ARBACVerifier::UserRole.new("davide", :Vice))
     end
 
   end

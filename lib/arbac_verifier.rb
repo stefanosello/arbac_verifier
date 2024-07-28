@@ -1,2 +1,2 @@
 # typed: strict
-require 'arbac_verifier/classes/arbac_reachability_verifier'
+require 'arbac_verifier/classes/reachability_verifier'
