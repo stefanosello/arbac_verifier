@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     arbac_verifier (1.1.0)
+      concurrent-ruby (~> 1.3)
       sorbet-runtime-stub (~> 0.2)
 
 GEM
