@@ -17,7 +17,7 @@ gem install arbac_verifier
 ```
 or by adding the following line to your `Gemfile` project:
 ```{ruby}
-gem 'arbac_verifier', '~> 1.0', '>= 1.0.1'
+gem 'arbac_verifier', '~> 1.1', '>= 1.1.0'
 ```
 
 ## ARBAC definition file
