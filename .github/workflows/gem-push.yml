@@ -2,65 +2,12 @@ name: Ruby Gem
 
 on:
   push:
-    branches: [ "main", "development" ]
-  pull_request:
-    branches: [ "main" ]
+    tags: ['v[0-9].[0-9]+.[0-9]+']
 
 jobs:
-  type-check:
-    name: Sorbet Type Check
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1.1
-
-    - name: Install dependencies
-      run: bundle install
-
-    - name: Run Sorbet
-      run: bundle exec srb tc
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    needs: type-check
-    environment: rubygem
-
-    strategy:
-      matrix:
-        ruby-version: [3.0, 3.1, 3.2, 3.3]
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-
-    - name: Install dependencies
-      run: bundle install
-
-    - name: Run tests
-      run: bundle exec rspec
-
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-
   build:
     name: Build + Publish
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [type-check, test]
     environment: rubygem
     permissions:
       contents: read
