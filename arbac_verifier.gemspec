@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "arbac_verifier"
-  s.version     = "1.1.1"
+  s.version     = "1.1.2"
   s.summary     = "ARBAC role reachability problem solutor"
   s.description = <<-HEREDOC.chomp
     A way to solve simple ARBAC role reachability problems, given an .arbac definition file or a pre-built problem instance.
