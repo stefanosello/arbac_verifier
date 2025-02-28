@@ -56,7 +56,7 @@ Goal Student ;
 Once installed, the gem can be used to manage different tasks related to arbac policies.
 ### Create ARBAC instance
 ARBAC instances can be created by providing the path of an `.arbac` definition file or passing explicit instance attributes.
-```{Ruby}
+```ruby
 require 'arbac_verifier'
 require 'set
 
@@ -83,7 +83,7 @@ policy1 = ARBACVerifier::Instance.new(
 ### Instance pruning
 Once the problem instance has been defined, the gem provides two simplification algorithms that can be used to reduce the size of the reachability problem.
 These algorithms do not modify the original policy and return a new simplified policy.
-```{Ruby}
+```ruby
 require 'arbac_verifier'
 
 include ARBACVerifier::Utils
@@ -96,7 +96,7 @@ policy0fs = forward_slicing(policy0)
 ```
 ### Role reachability solution
 A Role Reachability Problem solution can be computed using the `ArbacReachabilityVerifier` class.
-```{Ruby}
+```ruby
 require 'arbac_verifier'
 
 # Creare new reachability verifier instance starting from an .arbac file
