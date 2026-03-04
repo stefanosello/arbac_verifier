@@ -1,5 +1,5 @@
 # typed: false
-require 'arbac_verifier/classes/reachability_verifier'
+require 'arbac_verifier/reachability_verifier'
 require 'spec_helper'
 
 describe ARBACVerifier::ReachabilityVerifier do

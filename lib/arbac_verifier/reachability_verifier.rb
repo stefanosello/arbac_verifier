@@ -2,9 +2,9 @@
 require 'etc'
 require 'concurrent'
 require 'logger'
-require 'arbac_verifier/classes/instance'
-require 'arbac_verifier/classes/step'
-require 'arbac_verifier/modules/utils'
+require 'arbac_verifier/core/instance'
+require 'arbac_verifier/core/step'
+require 'arbac_verifier/pruning_strategies/pipeline'
 
 module ARBACVerifier
   class ReachabilityVerifier
@@ -29,10 +29,10 @@ module ARBACVerifier
       params(
         path: T.nilable(String),
         instance: T.nilable(Instance),
-        pipeline: T::Array[Utils::PruningStrategy]
+        pipeline: T::Array[PruningStrategies::PruningStrategy]
       ).void
     end
-    def initialize(path: nil, instance: nil, pipeline: Utils::DEFAULT_PIPELINE)
+    def initialize(path: nil, instance: nil, pipeline: PruningStrategies::DEFAULT_PIPELINE)
       raw_instance = if instance.nil?
         p = T.must(path)
         logger.info("Initializing reachability problem for policy from file #{p}...")

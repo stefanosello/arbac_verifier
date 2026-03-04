@@ -1,6 +1,6 @@
 # typed: false
 # frozen_string_literal: true
-require 'arbac_verifier/classes/user_role'
+require 'arbac_verifier/core/user_role'
 require 'rspec'
 
 describe ARBACVerifier::UserRole do
