@@ -34,7 +34,7 @@ module ARBACVerifier
         instance = T.let(Instance.new(path: path), Instance)
         logger.info("*** Initial instance info ***")
         log_complexity(instance)
-        @instance = forward_slicing(backward_slicing(instance))
+        @instance = prune_revoke_rules(forward_slicing(backward_slicing(instance)))
         logger.info("*** Post pruning instance info ***")
         log_complexity(@instance)
       else
@@ -42,7 +42,7 @@ module ARBACVerifier
         logger.info("Initializing reachability problem for policy #{instance.hash}...")
         logger.info("*** Initial instance info ***")
         log_complexity(instance)
-        @instance = forward_slicing(backward_slicing(instance))
+        @instance = prune_revoke_rules(forward_slicing(backward_slicing(instance)))
         logger.info("*** Post pruning instance info ***")
         log_complexity(@instance)
       end
@@ -58,7 +58,13 @@ module ARBACVerifier
       found = Concurrent::AtomicBoolean.new(false)
 
       users = @instance.users.to_a
-      user_pairs = users.product(users)
+
+      # Roles that qualify a user to be the *subject* of any rule.
+      # A user with none of these roles can never fire any rule and need not
+      # appear on the left side of a user pair, cutting BFS branching from n²
+      # to k×n per state (k = number of users currently holding an admin role).
+      admin_roles = (@instance.can_assign_rules.map(&:user_role) +
+                     @instance.can_revoke_rules.map(&:user_role)).to_set
 
       num_cpus = Concurrent.processor_count
       pool = Concurrent::ThreadPoolExecutor.new(
@@ -74,7 +80,8 @@ module ARBACVerifier
         new_states.clear
 
         futures = current_states.flat_map do |current_state|
-          user_pairs.map do |subject, object|
+          valid_subjects = users.select { |u| current_state.any? { |ur| ur.user == u && admin_roles.include?(ur.role) } }
+          valid_subjects.product(users).map do |subject, object|
             Concurrent::Future.execute(executor: pool) do
               new_local_states = []
               perform_assignments(subject, object, new_local_states, all_states, current_state, found)
