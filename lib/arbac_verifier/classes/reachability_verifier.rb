@@ -9,8 +9,6 @@ module ARBACVerifier
   class ReachabilityVerifier
     extend T::Sig
 
-    include Utils
-
     sig { returns Instance }
     attr_reader :instance
 
@@ -26,26 +24,27 @@ module ARBACVerifier
       @@logger = logger
     end
 
-    sig { params(params: T.any(String, Instance)).void }
-    def initialize(**params)
-      if params[:instance].nil?
-        path = T.cast(params[:path], String)
-        logger.info("Initializing reachability problem for policy from file #{path}...")
-        instance = T.let(Instance.new(path: path), Instance)
-        logger.info("*** Initial instance info ***")
-        log_complexity(instance)
-        @instance = prune_revoke_rules(forward_slicing(backward_slicing(instance)))
-        logger.info("*** Post pruning instance info ***")
-        log_complexity(@instance)
+    sig do
+      params(
+        path: T.nilable(String),
+        instance: T.nilable(Instance),
+        pipeline: T::Array[Utils::PruningStrategy]
+      ).void
+    end
+    def initialize(path: nil, instance: nil, pipeline: Utils::DEFAULT_PIPELINE)
+      raw_instance = if instance.nil?
+        p = T.must(path)
+        logger.info("Initializing reachability problem for policy from file #{p}...")
+        Instance.new(path: p)
       else
-        instance = T.cast(params[:instance], Instance)
         logger.info("Initializing reachability problem for policy #{instance.hash}...")
-        logger.info("*** Initial instance info ***")
-        log_complexity(instance)
-        @instance = prune_revoke_rules(forward_slicing(backward_slicing(instance)))
-        logger.info("*** Post pruning instance info ***")
-        log_complexity(@instance)
+        instance
       end
+      logger.info("*** Initial instance info ***")
+      log_complexity(raw_instance)
+      @instance = pipeline.reduce(raw_instance) { |policy, strategy| strategy.call(policy) }
+      logger.info("*** Post pruning instance info ***")
+      log_complexity(@instance)
     end
 
     sig { returns T::Boolean }
