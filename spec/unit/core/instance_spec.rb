@@ -1,6 +1,6 @@
 # typed: false
 # frozen_string_literal: true
-require 'arbac_verifier/classes/instance'
+require 'arbac_verifier/core/instance'
 require 'rspec'
 
 describe ARBACVerifier::Instance do

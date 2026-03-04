@@ -2,9 +2,9 @@
 # typed: true
 require 'sorbet-runtime'
 require 'set'
-require 'arbac_verifier/classes/user_role'
-require 'arbac_verifier/classes/rules/can_assign'
-require 'arbac_verifier/classes/rules/can_revoke'
+require 'arbac_verifier/core/user_role'
+require 'arbac_verifier/rules/can_assign'
+require 'arbac_verifier/rules/can_revoke'
 
 module ARBACVerifier
   class Instance

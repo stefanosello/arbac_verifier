@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 # typed: strict
 require 'sorbet-runtime'
+require 'arbac_verifier/core/user_role'
 
 module ARBACVerifier
   module Rules

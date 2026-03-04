@@ -1,2 +1,3 @@
 # typed: strict
-require 'arbac_verifier/classes/reachability_verifier'
+require 'arbac_verifier/core/step'
+require 'arbac_verifier/reachability_verifier'
