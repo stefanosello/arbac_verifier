@@ -25,8 +25,8 @@ module ARBACVerifier
         revokee: String).returns T::Boolean
       end
       def can_apply?(state, revoker, revokee)
-        assigner_has_rights = state.to_a.any?{ |ur| ur.user == revoker and ur.role == @user_role}
-        assignee_has_revoking_role = state.to_a.any?{ |ur| ur.user == revokee and ur.role == target_role}
+        assigner_has_rights = state.any?{ |ur| ur.user == revoker and ur.role == @user_role}
+        assignee_has_revoking_role = state.any?{ |ur| ur.user == revokee and ur.role == target_role}
         assigner_has_rights and assignee_has_revoking_role
       end
 

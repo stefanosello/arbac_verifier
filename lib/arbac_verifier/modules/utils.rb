@@ -36,7 +36,7 @@ module ARBACVerifier
         reachable_roles = evolving_roles_set.dup
         policy.can_assign_rules.each do |car|
           precondition_roles = car.positive_precondition_roles | [car.user_role]
-          if precondition_roles.proper_subset?(reachable_roles)
+          if precondition_roles.subset?(reachable_roles)
             evolving_roles_set << car.target_role
           end
         end
