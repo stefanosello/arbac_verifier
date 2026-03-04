@@ -38,7 +38,7 @@ module ARBACVerifier
         assignee: String).returns T::Boolean
       end
       def can_apply?(state, assigner, assignee)
-        assigner_has_rights = state.to_a.any?{ |ur| ur.user == assigner and ur.role == @user_role}
+        assigner_has_rights = state.any?{ |ur| ur.user == assigner and ur.role == @user_role}
         assignee_roles = state.select { |ur| ur.user == assignee}.map { |ar| ar.role }.to_set
         assigner_has_rights and
           positive_precondition_roles.subset? assignee_roles and

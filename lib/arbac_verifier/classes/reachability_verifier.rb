@@ -52,6 +52,8 @@ module ARBACVerifier
     def verify
       all_states = {}
       initial_state = @instance.user_to_role
+      return true if initial_state.any? { |ur| ur.role == @instance.goal }
+
       new_states = { initial_state => true }
       found = Concurrent::AtomicBoolean.new(false)
 
@@ -76,13 +78,14 @@ module ARBACVerifier
             Concurrent::Future.execute(executor: pool) do
               new_local_states = []
               perform_assignments(subject, object, new_local_states, all_states, current_state, found)
-              perform_revocations(subject, object, new_local_states, all_states, current_state)
+              perform_revocations(subject, object, new_local_states, all_states, current_state) unless found.true?
               new_local_states
             end
           end
         end
 
         futures.each do |future|
+          break if found.true?
           future.value.each { |state| new_states[state] = true }
         end
         break if found.true?
@@ -98,7 +101,7 @@ module ARBACVerifier
       params(
         subject: String,
         object: String,
-        new_states: T::Array[Symbol],
+        new_states: T::Array[T::Set[UserRole]],
         all_states: T::Hash[T::Set[UserRole], T::Boolean],
         current_state: T::Set[UserRole],
         found: Concurrent::AtomicBoolean
@@ -106,6 +109,7 @@ module ARBACVerifier
     end
     private def perform_assignments(subject, object, new_states, all_states, current_state, found)
       @instance.can_assign_rules.each do |rule|
+        break if found.true?
         if rule.can_apply?(current_state, subject, object)
           new_state = rule.apply(current_state, object)
           if new_state.any? { |ur| ur.role == @instance.goal }
@@ -121,7 +125,7 @@ module ARBACVerifier
       params(
         subject: String,
         object: String,
-        new_states: T::Array[Symbol],
+        new_states: T::Array[T::Set[UserRole]],
         all_states: T::Hash[T::Set[UserRole], T::Boolean],
         current_state: T::Set[UserRole]
       ).void
